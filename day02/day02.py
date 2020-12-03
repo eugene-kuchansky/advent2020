@@ -8,7 +8,6 @@ PasswordRecord = namedtuple("PasswordRecord", "min_limit max_limit symbol passwo
 def read_data() -> List[PasswordRecord]:
     res = []
     for line in sys.stdin:
-        print(line)
         rule, password = [_.strip() for _ in line.split(":")]
         limits, symbol = rule.split(" ")
         min_limit, max_limit = limits.split("-")
@@ -21,7 +20,6 @@ def calc1(data: List[PasswordRecord]) -> int:
     for record in data:
         cnt = record.password.count(record.symbol)
         is_password_valid = record.min_limit <= cnt <= record.max_limit
-        print(record, is_password_valid)
         total_valid += int(is_password_valid)
     return total_valid
 
@@ -32,7 +30,6 @@ def calc2(data: List[PasswordRecord]) -> int:
         symbol1 = record.password[record.min_limit - 1]
         symbol2 = record.password[record.max_limit - 1]
         is_password_valid = bool(symbol1 == record.symbol) ^ bool(symbol2 == record.symbol)
-        print(record, is_password_valid)
         total_valid += int(is_password_valid)
     return total_valid
 
