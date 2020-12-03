@@ -12,14 +12,17 @@ Move = namedtuple("Move", "right down")
 class Position(NamedTuple):
     x: int
     y: int
+    width: int
+    height: int
 
-    def next_position(self, move: Move, area: "Area") -> "Position":
-        # next_position = Position(self._width, self._height)
-        x = self.x + move.right
+    @staticmethod
+    def initial(width, height) -> "Position":
+        return Position(x=0, y=0, width=width, height=height)
+
+    def next_position(self, move: Move) -> "Position":
+        x = (self.x + move.right) % self.width
         y = self.y + move.down
-        if x >= area.width:
-            x = x - area.width
-        return Position(x, y)
+        return Position(x, y, self.width, self.height)
 
     def is_bottom(self, area: "Area") -> bool:
         return self.y >= area.height
@@ -43,12 +46,12 @@ def read_data() -> List[str]:
 
 
 def calc1(area: Area, move: Move):
-    position = Position(0, 0)
+    position = Position.initial(area.width, area.height)
     trees = 0
     while not position.is_bottom(area):
         if area.on_position(position) == TREE:
             trees += 1
-        position = position.next_position(move, area)
+        position = position.next_position(move)
     return trees
 
 
