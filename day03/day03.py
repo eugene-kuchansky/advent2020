@@ -1,20 +1,18 @@
 import sys
 from collections import namedtuple
-from typing import List
-import math
+from typing import List, NamedTuple
+
 
 TREE = "#"
 SPACE = "."
 
 Move = namedtuple("Move", "right down")
-PositionTuple = namedtuple("Position", "x y")
 
-class Position(PositionTuple):
-    # def __init__(self, width: int, height: int):
-    #     self.x = 0
-    #     self.y = 0
-    #     self._width = width
-    #     self._height = height
+
+class Position(NamedTuple):
+    x: int
+    y: int
+
     def next_position(self, move: Move, area: "Area") -> "Position":
         # next_position = Position(self._width, self._height)
         x = self.x + move.right
