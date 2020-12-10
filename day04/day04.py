@@ -1,5 +1,5 @@
 import sys
-from typing import List, Dict
+from typing import List, Dict, Tuple
 import re
 from abc import ABCMeta
 
@@ -73,12 +73,12 @@ class Passport:
         self.fields = fields
 
     def is_valid_fields_num(self) -> bool:
-        existing_fields = set(self.fields.keys())
+        fields_num = len(self.fields)
 
-        if len(existing_fields) == 8:
+        if fields_num == 8:
             return True
 
-        if len(existing_fields) == 7 and "cid" not in existing_fields:
+        if fields_num == 7 and "cid" not in self.fields:
             return True
 
         return False
@@ -92,8 +92,8 @@ class Passport:
     @staticmethod
     def from_lines(lines: List[str]) -> "Passport":
         all_fields: str = " ".join([line.strip() for line in lines])
-        pairs: List[List[str]] = [pair.split(":") for pair in all_fields.split(" ")]
-        fields: Dict[str, str] = dict([(pair[0], pair[1]) for pair in pairs])
+        pairs: List[Tuple[str]] = [tuple(pair.split(":")) for pair in all_fields.split(" ")]
+        fields: Dict[str, str] = dict(*pairs)
         return Passport(fields)
 
 
