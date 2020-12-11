@@ -1,5 +1,5 @@
 import sys
-from typing import List, NamedTuple, Iterable
+from typing import List, Iterable
 from collections import defaultdict
 import math
 
@@ -30,20 +30,12 @@ def calc2(diffs: List[int]) -> int:
     return int(math.pow(7, cnt[4])) * int(math.pow(4, cnt[3])) * int(math.pow(2, cnt[2]))
 
 
-
 if __name__ == "__main__":
     initial_data = read_data(sys.stdin)
     # initial_data = read_data(ADAPTERS.split("\n"))
 
-    diffs = calc1(initial_data)
-    print(f"result 1: {diffs.count(3) * diffs.count(1)}")
+    res_diffs = calc1(initial_data)
+    print(f"result 1: {res_diffs.count(3) * res_diffs.count(1)}")
 
-    res2 = calc2(diffs)
+    res2 = calc2(res_diffs)
     print(f"result 2: {res2}")
-    # 2 -> 2
-    # 3 -> 4
-    # 4 -> 7
-    #
-    # 4 - 4
-    # 3 - 1
-    # 2 - 1
