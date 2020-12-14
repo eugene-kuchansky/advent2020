@@ -26,7 +26,7 @@ def calc1(depart: int, buses: List[Bus]) -> int:
 #   return: Bézout's coefficients and GCD
 # https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
 # https://en.wikipedia.org/wiki/Bézout%27s_identity
-def extended_gcd(a, b):
+def extended_gcd(a: int, b: int) -> int:
     r_old, r = a, b
     s, s_old = 1, 0
     while r:
@@ -39,7 +39,7 @@ def extended_gcd(a, b):
     return bezout_t
 
 
-def product(args) -> int:
+def product(args: Iterable[int]) -> int:
     # python 3.6 has no prod function in standard module
     result = 1
     for value in args:
