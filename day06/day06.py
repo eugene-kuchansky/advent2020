@@ -3,16 +3,20 @@ from typing import List, NamedTuple, Iterable, Set
 
 
 class GroupAnswers(NamedTuple):
-    people_answers: List[Set]
-    combined_answers: Set
-    common_answers: Set
+    people_answers: List[Set[str]]
+
+    @property
+    def combined_answers(self) -> Set[str]:
+        return set.union(*self.people_answers)
+
+    @property
+    def common_answers(self) -> Set[str]:
+        return set.intersection(*self.people_answers)
 
     @staticmethod
     def from_lines(lines: List[str]) -> "GroupAnswers":
         people = [set(line) for line in lines]
-        combined = set.union(*people)
-        common = set.intersection(*people)
-        return GroupAnswers(people_answers=people, combined_answers=combined, common_answers=common)
+        return GroupAnswers(people)
 
 
 def read_data(stream: Iterable[str]) -> List[GroupAnswers]:
