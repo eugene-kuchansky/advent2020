@@ -1,6 +1,5 @@
 import sys
 from typing import List, Iterable, Dict
-from collections import deque
 
 
 class BagsRepo:
@@ -79,13 +78,13 @@ def calc1(bags_repo: BagsRepo) -> int:
     initial_bag = bags_repo.get("shiny gold")
     counted_bags = set()
     num = 0
-    q = deque()
+    q = []
 
     for outer_bag in initial_bag.in_bags:
         q.append(outer_bag)
 
     while q:
-        bag = q.popleft()
+        bag = q.pop()
         if bag not in counted_bags:
             counted_bags.add(bag)
             num += 1
@@ -97,17 +96,13 @@ def calc1(bags_repo: BagsRepo) -> int:
 def calc2(bags_repo: BagsRepo) -> int:
     initial_bag = bags_repo.get("shiny gold")
     num = 0
-    q = deque()
-
-    for inner_bag, inner_num in initial_bag.contains.items():
-        q.append((inner_num, inner_bag))
-        num += inner_num
+    q = [(1, initial_bag)]
 
     while q:
-        prev_multiplier, bag = q.popleft()
+        multiplier, bag = q.pop()
         for inner_bag, inner_num in bag.contains.items():
-            q.append((prev_multiplier * inner_num, inner_bag))
-            num += inner_num * prev_multiplier
+            q.append((multiplier * inner_num, inner_bag))
+            num += inner_num * multiplier
     return num
 
 
