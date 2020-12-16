@@ -32,7 +32,6 @@ def calc2(diffs: List[int]) -> int:
 
 if __name__ == "__main__":
     initial_data = read_data(sys.stdin)
-    # initial_data = read_data(ADAPTERS.split("\n"))
 
     res_diffs = calc1(initial_data)
     print(f"result 1: {res_diffs.count(3) * res_diffs.count(1)}")
