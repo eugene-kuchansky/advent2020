@@ -101,8 +101,9 @@ def calc2(bags_repo: BagsRepo) -> int:
     while q:
         multiplier, bag = q.pop()
         for inner_bag, inner_num in bag.contains.items():
-            q.append((multiplier * inner_num, inner_bag))
-            num += inner_num * multiplier
+            inner_bags_num = multiplier * inner_num
+            q.append((inner_bags_num, inner_bag))
+            num += inner_bags_num
     return num
 
 
