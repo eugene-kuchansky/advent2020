@@ -3,6 +3,8 @@ from typing import List, Iterable, Optional
 import copy
 
 
+# actually we can do without this hierarchy of classes
+# anyway, I've expected it would be useful fort second part
 class Command:
     def __init__(self, value: int):
         self.value = value
