@@ -19,6 +19,12 @@ def read_data(stream: Iterable[str]) -> List[ValueType]:
     return [ValueType(line) for line in stream if line.strip()]
 
 
+# way too complex. in the context of size of data this solution should be brutforce-ish
+# the idea behind this solution:
+# - keep all sums of combination of preamble elements
+#   this allows to avoid recalculation of pairs which are not changed
+# - keep links sum->pairs
+#   when first element is removed then it's sums with other elements are removed without recalculation
 class Preamble:
     def __init__(self):
         self.index_sums: Dict[IndexType, Dict[SumType, List[IndexType]]] = {}
@@ -84,6 +90,10 @@ def calc1(numbers: List[ValueType], preamble_len: int) -> int:
     return -1
 
 
+# one again this solution is pre-optimized
+# premature optimization is the root of all evil (c) Donald Knuth
+# it would be sufficient to check sequences which start at every number
+# until sum ot elements if not more that target number
 def calc2(target_value_ind: IndexType, numbers: List[ValueType]) -> List[ValueType]:
     target_value = numbers[target_value_ind]
 
