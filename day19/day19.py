@@ -88,30 +88,30 @@ def calc1(rules: Dict[int, Rule], rules_schemas: Dict[int, RuleSchema]) -> Dict[
 
 def is_valid(message: str, prefixes: Set[str], suffixes: Set[str]) -> bool:
     # check if first part of the message consists only from prefixes patterns
-    # remove patterns until it's possible
     prefixes_num = 0
-    while message:
+    start = 0
+    while start < len(message):
         for prefix in prefixes:
-            if message.startswith(prefix):
-                message = message[len(prefix) :]
+            if message.startswith(prefix, start):
+                start += len(prefix)
                 prefixes_num += 1
                 break
         else:
             break
+
     # check if last part of the message consists only from suffixes patterns
-    # remove patterns until it's possible
     suffixes_num = 0
-    while message:
+    while start < len(message):
         for suffix in suffixes:
-            if message.endswith(suffix):
-                message = message[: -len(suffix)]
+            if message.endswith(suffix, start):
                 suffixes_num += 1
+                start += len(suffix)
                 break
         else:
-            return False
+            break
     # if message is valid it should not contain any other symbols
     # and number of prefixes is at least 2, number of suffixes is at least 1 and less than number of prefixes
-    return not (len(message)) and prefixes_num > suffixes_num >= 1
+    return start == len(message) and prefixes_num > suffixes_num >= 1
 
 
 def calc2(rules: Dict[int, Rule], messages: List[str]) -> int:
