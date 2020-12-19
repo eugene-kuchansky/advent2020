@@ -9,14 +9,42 @@ def read_data(stream: Iterable[str]) -> List[int]:
 
 
 def calc1(adapters: List[int]) -> List[int]:
+    # add (first) charging outlet
     adapters.append(0)
+
     adapters.sort()
+
+    # add (last) device joltage adapter
     device_adapter = adapters[-1] + 3
     adapters.append(device_adapter)
+
     diffs = [adapters[i + 1] - adapters[i] for i in range(len(adapters) - 1)]
     return diffs
 
 
+# the idea is empiric
+# we need to find all sequences with elements diff equals to 1
+# the minimum length of such sequence is 2
+# here is the example:
+# adapters=1 3 4 5 8
+# diffs = 3 1 1 3
+# there are only 2 ways to arrange this peace [1 1]
+# 1) adapters=1 3 4 5 8
+# 2) adapters=1 3 5 8
+#
+# in case when 3 one-diffs in a row there are 4 (1+3) way to arrange adapters:
+# adapters=1 3 4 5 6 9
+# diffs = 3 1 1 1 3
+# 1) adapters=1 3 4 5 6 9
+# 2) adapters=1 3 5 6 9
+# 3) adapters=1 3 4 6 9
+# 4) adapters=1 3 6 9
+#
+# for 4 one-diffs in a row there are 7 (4+3) way to arrange adapters
+# for 5 one-diffs in a row there are 10 (7+3) way to arrange adapters and so on
+#
+# combination of variants is multiplied
+# so as if there are 2 subsequences with lengths 2 and 3 then the result is 2 * 4 = 12
 def calc2(diffs: List[int]) -> int:
     cnt = defaultdict(int)
     subsequence = []
