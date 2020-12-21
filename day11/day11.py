@@ -60,16 +60,10 @@ class Layout:
         return current_state
 
     def calc(self):
-        is_changed = True
-
-        while is_changed:
-            is_changed = False
-            area = {}
-            for seat in self.seats:
-                status = self.get_seat_status(seat)
-                if status != self.area[seat]:
-                    is_changed = True
-                area[seat] = status
+        while True:
+            area = {seat: self.get_seat_status(seat) for seat in self.seats}
+            if area == self.area:
+                break
             self.area = area
 
         return sum(status == OCCUPIED for status in self.area.values())
