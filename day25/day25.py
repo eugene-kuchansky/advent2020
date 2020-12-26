@@ -18,11 +18,11 @@ def find_enc_key(loop: int, pub_key: int, divider: int) -> int:
 
 
 def find_loop(pub_key: int, divider: int) -> int:
-    loop = 1
-    num = subj = 7
+    loop = 0
+    num = 1
+    subj = 7
     while True:
-        num *= subj
-        num %= divider
+        num = (num * subj) % divider
         if num == pub_key:
             break
         loop += 1
